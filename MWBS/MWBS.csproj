@@ -159,12 +159,19 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BoardCop\BoardCop.cs" />
+    <Compile Include="BoardCop\IBoardCop.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Dictionary\IWordDictionary.cs" />
     <Compile Include="Dictionary\WordDictionary.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Board.cs" />
+    <Compile Include="Models\LetterPoint.cs" />
+    <Compile Include="Models\Point.cs" />
+    <Compile Include="Models\Puzzle.cs" />
+    <Compile Include="Models\Word.cs" />
     <Compile Include="Permeator\IPermeator.cs" />
     <Compile Include="Permeator\Permeator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -211,7 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

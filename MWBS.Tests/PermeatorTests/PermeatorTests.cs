@@ -87,7 +87,7 @@ namespace MWBS.Tests.PermeatorTests
         public void GetIncludeInputs_Test(int length, int numOfTruths, params int[] expectedResults)
         {
             var perm = new Permeator.Permeator(length);
-            List<int> inputs = perm.GetIncludeInputs(length, numOfTruths);
+            List<int> inputs = perm.GetIncludeMasks(length, numOfTruths);
 
             decimal expectedCount = Choose(length, numOfTruths);
             Assert.AreEqual(expectedCount, inputs.Count);

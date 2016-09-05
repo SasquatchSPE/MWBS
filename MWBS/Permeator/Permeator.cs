@@ -23,7 +23,7 @@ namespace MWBS.Permeator
             var allPosibilities = new List<string>();
             for (int wordLength = minWordLength; wordLength <= maxWordLength; wordLength++)
             {
-                List<int> includeInputs = GetIncludeInputs(letterCount, wordLength);
+                List<int> includeInputs = GetIncludeMasks(letterCount, wordLength);
                 foreach (int includeInput in includeInputs)
                 {
                     string input = GetInput(letters, includeInput);
@@ -59,7 +59,7 @@ namespace MWBS.Permeator
             return isSet;
         }
 
-        public List<int> GetIncludeInputs(int length, int numberOfTruths)
+        public List<int> GetIncludeMasks(int length, int numberOfTruths)
         {
             var includeInput = new bool[length];
             for (int index = 0; index < numberOfTruths; index++)
