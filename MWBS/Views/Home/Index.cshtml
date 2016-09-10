@@ -2,6 +2,54 @@
     ViewBag.Title = "MWBS";
 }
 
-<div class="row">
-    
+<div class="col-md-12">
+    @using (Ajax.BeginForm("GetBoardSolution", "Home", new AjaxOptions
+    {
+        InsertionMode = InsertionMode.ReplaceWith,
+        UpdateTargetId = "solutionlist",
+        LoadingElementId = "loader"
+    }))
+    {
+        string board = "";
+        string wordLengths = "";
+       
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-2">Board</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => board, new {htmlAttributes = new {@class = "form-control", placeholder = "abcd = 2x2, left to right, top to bottom"}})
+                    @Html.ValidationMessageFor(model => board, "", new {@class = "text-danger"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Word Lengths</label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => wordLengths, new { htmlAttributes = new { @class = "form-control", placeholder = "2,3 = two words, lengths 2 and 3" } })
+                    @Html.ValidationMessageFor(model => wordLengths, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Solve" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <div id="loader" style="display: none;width: 100%;">
+        <span style="align-content: center">
+            <img src="~/Images/ajax-loader.gif" />
+        </span>
+    </div>
+    <br/>
+    <div id="solutionlist">
+        @Html.Partial("_BoardSolutionView")
+    </div>
 </div>
