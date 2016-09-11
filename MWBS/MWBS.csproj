@@ -161,7 +161,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BoardCop\BoardCop.cs" />
     <Compile Include="BoardCop\IBoardCop.cs" />
+    <Compile Include="BoardSolver\BoardSolver.cs" />
+    <Compile Include="BoardSolver\IBoardSolver.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Dictionary\DefaultWordDictionary.cs" />
     <Compile Include="Dictionary\IWordDictionary.cs" />
     <Compile Include="Dictionary\WordDictionary.cs" />
     <Compile Include="Global.asax.cs">
@@ -171,6 +174,7 @@
     <Compile Include="Models\LetterPoint.cs" />
     <Compile Include="Models\Point.cs" />
     <Compile Include="Models\Puzzle.cs" />
+    <Compile Include="Models\PuzzleSolution.cs" />
     <Compile Include="Models\Word.cs" />
     <Compile Include="Permeator\IPermeator.cs" />
     <Compile Include="Permeator\Permeator.cs" />
@@ -179,6 +183,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Dictionary\en_dic.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
