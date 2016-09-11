@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using MWBS.Models;
 
 namespace MWBS.Controllers
 {
@@ -13,18 +15,19 @@ namespace MWBS.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public PartialViewResult GetBoardSolution(string board, string wordLengths)
         {
-            ViewBag.Message = "Your application description page.";
+            Thread.Sleep(3000);
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var solution = new PuzzleSolutionModel
+            {
+                Words = new List<List<string>>
+                {
+                    new List<string> {board, "fee",  "fi",  "fo" },
+                    new List<string> {wordLengths, "foo", "bar" }
+                }
+            };
+            return PartialView("_BoardSolutionView", solution);
         }
     }
 }

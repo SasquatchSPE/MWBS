@@ -1,0 +1,25 @@
+﻿@model  MWBS.Models.PuzzleSolutionModel
+    
+<table class="table">
+    <tr>
+        <th>
+            Solutions
+        </th>
+    </tr>
+    @if (Model != null)
+    {
+        foreach (string solution in Model.SolutionList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => solution)
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr><td>No Solutions =(</td></tr>
+    }
+
+</table> 
