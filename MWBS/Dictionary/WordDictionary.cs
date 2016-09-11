@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 
 namespace MWBS.Dictionary
 {
@@ -7,6 +8,26 @@ namespace MWBS.Dictionary
     /// </summary>
     public class WordDictionary : IWordDictionary
     {
+        public WordDictionary()
+        {
+            List<string> words = DefaultWordDictionary.GetDefaultWords();
+            InitDict(words);
+        }
+
+        public WordDictionary(List<string> words)
+        {
+            InitDict(words);
+        }
+
+        private void InitDict(IEnumerable<string> words)
+        {
+            ClearWords();
+            foreach (string word in words)
+            {
+                AddWord(word.ToLower());
+            }
+        }
+
         private static readonly HashSet<string> Dictionary = new HashSet<string>();
         
         public void AddWord(string word)
@@ -16,7 +37,7 @@ namespace MWBS.Dictionary
 
         public bool Contains(string word)
         {
-            return Dictionary.Contains(word);
+            return Dictionary.Contains(word.ToLower());
         }
 
         public void RemoveWord(string word)

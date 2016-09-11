@@ -7,9 +7,6 @@ namespace MWBS.Dictionary
 {
     public interface IWordDictionary
     {
-        void AddWord(string word);
         bool Contains(string word);
-        void RemoveWord(string word);
-        void ClearWords();
     }
 }

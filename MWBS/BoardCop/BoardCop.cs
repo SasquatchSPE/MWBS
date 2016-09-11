@@ -8,18 +8,66 @@ namespace MWBS.BoardCop
     {
         public bool AreValidGuesses(Board board, params Word[] guesses)
         {
+
+
             Board newBoard = board.Clone();
             foreach (Word guess in guesses)
             {
+                string word = guess.Letters;
                 if (!IsValidConnection(newBoard, guess))
                 {
                     return false;
                 }
 
-                RemoveWord(board, guess);
+                RemoveWord(newBoard, guess);
             }
 
             return true;
+        }
+
+        public List<Word> GetPossibleWordPlacement(Board board, string word)
+        {
+            int length = word.Length;
+            if (length == 0)
+            {
+                return new List<Word>();
+            }
+
+            char firstLetter = word[0];
+
+            var words = new List<Word>();
+
+            List<LetterPoint> letterPoints = PossibleLetterPoints(board, firstLetter);
+            foreach (LetterPoint letterPoint in letterPoints)
+            {
+                List<Word> possibleSubWordPlacements = GetPossibleWordPlacement(board, word.Substring(1));
+                if (!possibleSubWordPlacements.Any())
+                {
+
+                    words.Add(new Word
+                    {
+                        LetterPoints = new List<LetterPoint>
+                        {
+                            letterPoint
+                        }
+                    });
+                    continue;
+                }
+
+                foreach (Word possibleSubWordPlacement in possibleSubWordPlacements)
+                {
+                    possibleSubWordPlacement.LetterPoints.Insert(0, letterPoint);
+                    words.Add(possibleSubWordPlacement);
+                }
+            }
+
+            return words;
+        }
+
+        public List<LetterPoint> PossibleLetterPoints(Board board, char letter)
+        {
+            List<LetterPoint> letterPoints = board.Where(lp => lp.Letter.HasValue && lp.Letter.Value == letter).ToList();
+            return letterPoints;
         }
 
         public bool IsValidConnection(Board board, Word word)
@@ -69,7 +117,7 @@ namespace MWBS.BoardCop
                 RemoveLetter(board, letterPoint);
             }
 
-            FixLetters(board);
+            FixBoard(board);
         }
 
         private void RemoveLetter(Board newBoard, LetterPoint letterPoint)
@@ -77,7 +125,7 @@ namespace MWBS.BoardCop
             newBoard[letterPoint.Point.X, letterPoint.Point.Y] = null;
         }
 
-        private void FixLetters(Board board)
+        public void FixBoard(Board board)
         {
             int maxX = board.Size - 1;
             List<LetterPoint> bottomLetterPoints = board.Where(lp => lp.Point.X == maxX).ToList();
@@ -88,7 +136,7 @@ namespace MWBS.BoardCop
             }
         }
 
-        private void FixColumn(Board board, List<LetterPoint> letterPoints)
+        public void FixColumn(Board board, List<LetterPoint> letterPoints)
         {
             LetterPoint[] lettersWithValues = letterPoints.Where(lp => lp.Letter.HasValue).OrderByDescending(lp => lp.Point.X).ToArray();
             int numLettersWithValues = lettersWithValues.Length;
@@ -114,7 +162,7 @@ namespace MWBS.BoardCop
 
         public IEnumerable<LetterPoint> GetLettersAtOrAbove(Board board, LetterPoint letterPoint)
         {
-            IEnumerable<LetterPoint> letterPoints = board.Where(lp => (lp.Point.Y == letterPoint.Point.Y && lp.Point.X > letterPoint.Point.X) || (lp.Point.X == letterPoint.Point.X && lp.Point.Y == letterPoint.Point.Y));
+            IEnumerable<LetterPoint> letterPoints = board.Where(lp => (lp.Point.Y == letterPoint.Point.Y && lp.Point.X < letterPoint.Point.X) || (lp.Point.X == letterPoint.Point.X && lp.Point.Y == letterPoint.Point.Y));
             return letterPoints;
         }
     }

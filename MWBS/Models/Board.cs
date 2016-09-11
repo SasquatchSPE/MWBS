@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace MWBS.Models
@@ -8,14 +9,34 @@ namespace MWBS.Models
         private char?[,] Letters { get; set; }
         public Board(int size)
         {
+            Size = size;
             Letters = new char?[size,size];
         }
 
-        public int Size => Letters.Length;
+        public void SetBoard(string letters)
+        {
+            int expectedLetterSize = (int)Math.Pow(Size, 2);
+            if (expectedLetterSize != letters.Length)
+            {
+                throw new ApplicationException($"There are {letters.Length} letters but there should be {expectedLetterSize}");
+            }
+
+            int index = 0;
+            for (int x = 0; x < Size; x++)
+            {
+                for (int y = 0; y < Size; y++)
+                {
+                    char letter = letters[index++];
+                    this[x, y] = letter;
+                }
+            }
+        }
+
+        public int Size { get; set; }
 
         public IEnumerator<LetterPoint> GetEnumerator()
         {
-            int length = Letters.Length;
+            int length = Size;
 
             for (int x = 0; x < length; x++)
             {
