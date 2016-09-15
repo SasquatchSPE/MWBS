@@ -5,7 +5,7 @@ namespace MWBS.BoardCop
 {
     public interface IBoardCop
     {
-        bool AreValidGuesses(Board board, params Word[] guesses);
+        Board RemoveWord(Word word, Board board);
         List<Word> GetPossibleWordPlacement(Board board, string word);
     }
 }

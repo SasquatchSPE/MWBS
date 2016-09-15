@@ -8,5 +8,6 @@ namespace MWBS.Dictionary
     public interface IWordDictionary
     {
         bool Contains(string word);
+        IEnumerable<string> GetWordsOfLength(int length);
     }
 }

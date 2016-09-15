@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace MWBS.Dictionary
 {
@@ -24,11 +25,19 @@ namespace MWBS.Dictionary
             ClearWords();
             foreach (string word in words)
             {
+                int wordLength = word.Length;
+                if (!WordLengthMap.ContainsKey(wordLength))
+                {
+                    WordLengthMap.Add(wordLength, new HashSet<string>());
+                }
+
+                WordLengthMap[wordLength].Add(word);
                 AddWord(word.ToLower());
             }
         }
 
         private static readonly HashSet<string> Dictionary = new HashSet<string>();
+        private static readonly Dictionary<int, HashSet<string>> WordLengthMap = new Dictionary<int, HashSet<string>>();
         
         public void AddWord(string word)
         {
@@ -40,6 +49,11 @@ namespace MWBS.Dictionary
             return Dictionary.Contains(word.ToLower());
         }
 
+        public IEnumerable<string> GetWordsOfLength(int length)
+        {
+            return WordLengthMap.ContainsKey(length) ? WordLengthMap[length] : Enumerable.Empty<string>();
+        }
+
         public void RemoveWord(string word)
         {
             Dictionary.Remove(word);   
@@ -47,6 +61,7 @@ namespace MWBS.Dictionary
 
         public void ClearWords()
         {
+            WordLengthMap.Clear();
             Dictionary.Clear();
         }
     }

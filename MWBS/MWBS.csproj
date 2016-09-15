@@ -170,13 +170,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Manipulator\IWordManipulator.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\LetterPoint.cs" />
     <Compile Include="Models\Point.cs" />
     <Compile Include="Models\Puzzle.cs" />
-	<Compile Include="Models\PuzzleSolutionModel.cs" />	<Compile Include="Models\PuzzleSolution.cs" />    <Compile Include="Models\Word.cs" />
-    <Compile Include="Permeator\IPermeator.cs" />
-    <Compile Include="Permeator\Permeator.cs" />
+    <Compile Include="Models\PuzzleSolutionModel.cs" />
+    <Compile Include="Models\PuzzleSolution.cs" />
+    <Compile Include="Models\Word.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
