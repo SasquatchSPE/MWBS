@@ -178,6 +178,8 @@
     <Compile Include="Models\PuzzleSolutionModel.cs" />
     <Compile Include="Models\PuzzleSolution.cs" />
     <Compile Include="Models\Word.cs" />
+    <Compile Include="Plant\Plant.cs" />
+    <Compile Include="Plant\PuzzlePlant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +197,8 @@
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\MWBS %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\MWBS %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\MWBS.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

@@ -8,18 +8,30 @@
     </tr>
     @if (Model != null)
     {
-        foreach (string solution in Model.SolutionList)
+        if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => solution)
-                </td>
-            </tr>
+            <tr><td><span style="color: red;">@Model.ErrorMessage</span></td></tr>
         }
-    }
-    else
-    {
-        <tr><td>No Solutions =(</td></tr>
-    }
+        else
+        {
+            if (Model.SolutionList.Any())
+            {
+                foreach (string solution in Model.SolutionList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => solution)
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td>No solutions found =(</td>
+                </tr>
+            }
+        }
 
+    }
 </table> 

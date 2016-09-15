@@ -14,7 +14,7 @@ namespace MWBS.Tests.BoardSolverTests
         [Test]
         public void SolveBoard_4_Test()
         {
-            Puzzle puzzle = GeneratePuzzle(2, "cart", 4);
+            Puzzle puzzle = GeneratePuzzle("cart", 4);
         
             IWordDictionary dictionary = GetDictionary();
             IBoardCop boardCop = new BoardCop.BoardCop();
@@ -27,7 +27,7 @@ namespace MWBS.Tests.BoardSolverTests
         [Test]
         public void SolveBoard_9_Test()
         {
-            Puzzle puzzle = GeneratePuzzle(3, "flfooirde", 4, 5); // roof field
+            Puzzle puzzle = GeneratePuzzle("flfooirde", 4, 5); // roof field
 
             IWordDictionary dictionary = GetDictionary();
             IBoardCop boardCop = new BoardCop.BoardCop();
@@ -40,7 +40,7 @@ namespace MWBS.Tests.BoardSolverTests
         [Test]
         public void SolveBoard_9_Test_WrongFirstChoice()
         {
-            Puzzle puzzle = GeneratePuzzle(3, "efdidlrie", 4, 5); // ride field
+            Puzzle puzzle = GeneratePuzzle("efdidlrie", 4, 5); // ride field
 
             IWordDictionary dictionary = GetDictionary();
             IBoardCop boardCop = new BoardCop.BoardCop();
@@ -53,7 +53,7 @@ namespace MWBS.Tests.BoardSolverTests
         [Test]
         public void SolveBoard_16_Test()
         {
-            Puzzle puzzle = GeneratePuzzle(4, "aynedhecrtcaibkl", 8, 8); // cupboard roof oval
+            Puzzle puzzle = GeneratePuzzle("aynedhecrtcaibkl", 8, 8); // cupboard roof oval
 
             IWordDictionary dictionary = GetDictionary();
             IBoardCop boardCop = new BoardCop.BoardCop();
@@ -62,11 +62,9 @@ namespace MWBS.Tests.BoardSolverTests
             Assert.IsNotNull(solutions);
         }
 
-        private Puzzle GeneratePuzzle(int size, string letters, params int[] wordLengths)
+        private Puzzle GeneratePuzzle(string letters, params int[] wordLengths)
         {
-            var board = new Board(size);
-            board.SetBoard(letters);
-
+            var board = new Board(letters);
             var puzzle = new Puzzle
             {
                 Board = board,

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using MWBS.BoardSolver;
 using MWBS.Models;
+using MWBS.Plant;
 
 namespace MWBS.Controllers
 {
@@ -15,19 +17,36 @@ namespace MWBS.Controllers
             return View();
         }
 
+        [HttpPost]
+        [OutputCache(VaryByParam = "*", Duration = 0, NoStore = true)]
         public PartialViewResult GetBoardSolution(string board, string wordLengths)
         {
-            Thread.Sleep(3000);
+            ModelState.Clear();
 
-            var solution = new PuzzleSolutionModel
+            var solutionModel = new PuzzleSolutionModel();
+            string[] splitLengths = wordLengths.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries);
+
+            int dummy;
+            if (splitLengths.Any(sl => !Int32.TryParse(sl, out dummy)))
             {
-                Words = new List<List<string>>
-                {
-                    new List<string> {board, "fee",  "fi",  "fo" },
-                    new List<string> {wordLengths, "foo", "bar" }
-                }
-            };
-            return PartialView("_BoardSolutionView", solution);
+                solutionModel.ErrorMessage = "Word lengths must be comma separated numbers.";
+                return PartialView("_BoardSolutionView", solutionModel);
+            }
+
+            int[] lengths = splitLengths.Select(w => Convert.ToInt32(w)).ToArray();
+            string message = PuzzlePlant.IsValidPuzzle(board, lengths);
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                solutionModel.ErrorMessage = message;
+                return PartialView("_BoardSolutionView", solutionModel);
+            }
+
+            IBoardSolver boardSolver = Plant.Plant.BoardSolver;
+            Puzzle puzzle = PuzzlePlant.BuildPuzzle(board, lengths);
+            PuzzleSolution solution = boardSolver.SolvePuzzle(puzzle);
+
+            solutionModel.Words = solution.Solutions.Select(words => words.Select(w => w.Letters).ToList()).ToList();
+            return PartialView("_BoardSolutionView", solutionModel);
         }
     }
 }

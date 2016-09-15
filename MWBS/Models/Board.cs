@@ -6,14 +6,33 @@ namespace MWBS.Models
 {
     public class Board : IEnumerable<LetterPoint>
     {
-        private char?[,] Letters { get; set; }
+        public int Size { get; set; }
+        private char?[,] Letters { get; }
+
         public Board(int size)
         {
             Size = size;
-            Letters = new char?[size,size];
+            Letters = new char?[Size, Size];
         }
 
-        public void SetBoard(string letters)
+        public Board(string letters)
+        {
+            Size = GetSize(letters.Length);
+            Letters = new char?[Size, Size];
+            SetBoard(letters);
+        }
+
+        private int GetSize(int numOfLetters)
+        {
+            double size = Math.Sqrt(numOfLetters);
+            if (!(Math.Abs(size % 1) < .00001))
+            {
+                throw new ApplicationException($"Number of letters need to fit on a square board. {numOfLetters} is incompatible.");
+            }
+            return (int) size;
+        }
+
+        private void SetBoard(string letters)
         {
             int expectedLetterSize = (int)Math.Pow(Size, 2);
             if (expectedLetterSize != letters.Length)
@@ -31,8 +50,6 @@ namespace MWBS.Models
                 }
             }
         }
-
-        public int Size { get; set; }
 
         public IEnumerator<LetterPoint> GetEnumerator()
         {
